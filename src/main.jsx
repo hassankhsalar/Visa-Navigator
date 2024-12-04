@@ -14,17 +14,25 @@ import Home from './pages/Home.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App></App>,
-    children:[
+    element: <App />,
+    children: [
       {
-        index: true, // Default route (renders Home for '/')
+        index: true,
         element: <Home />,
+        loader: async () => {
+          try {
+            const response = await fetch('http://localhost:5000/visa');
+            if (!response.ok) {
+              throw new Error("Failed to fetch visa data");
+            }
+            return response.json();
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            return null; // Or return an empty array to handle gracefully
+          }
+        },
       },
-      {
-        path: "home", // Optional explicit route for '/home'
-        element: <Home />,
-      },
-    ]
+    ],
   },
   {
     path: "/addvisa",
