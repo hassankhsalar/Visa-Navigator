@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const VisaCards = ({ visa }) => {
+  const navigate = useNavigate(); // Initialize navigate function
+  
   const {
     countryName,
     countryImage,
@@ -12,7 +15,13 @@ const VisaCards = ({ visa }) => {
     fee,
     validity,
     applicationMethod,
+    _id,  // Access the visa ID for the route
   } = visa;
+
+  // Handle "See Details" button click
+  const handleSeeDetails = () => {
+    navigate(`/visa-details/${_id}`); // Redirect to the visa details page
+  };
 
   return (
     <div className="card lg:card-side bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
@@ -41,7 +50,9 @@ const VisaCards = ({ visa }) => {
           <strong>Application Method:</strong> {applicationMethod}
         </p>
         <div className="card-actions mt-auto flex justify-end">
-          <button className="btn btn-outline btn-primary">See Details</button>
+          <button className="btn btn-outline btn-primary" onClick={handleSeeDetails}>
+            See Details
+          </button>
         </div>
       </div>
     </div>
