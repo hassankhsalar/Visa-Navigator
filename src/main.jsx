@@ -15,6 +15,7 @@ import VisaDetails from './pages/VisaDetails.jsx';  // Import VisaDetails page
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import AuthProvider from './providers/AuthProvider.jsx';
+import MyVisaApplications from './pages/MyVisaApplications.jsx';
 
 const router = createBrowserRouter([
   {
@@ -69,13 +70,18 @@ const router = createBrowserRouter([
             return null;  // Handle error gracefully if fetching fails
           }
         }
-      }
+      },
+      {
+        path: "/addvisa",
+        element: <AddVisa />,
+      },
+      {
+        path: "/my-applications",
+        element: <MyVisaApplications></MyVisaApplications>,
+      },
     ]
   },
-  {
-    path: "/addvisa",
-    element: <AddVisa />,
-  },
+  
   {
     path: "/login",
     element: <Login></Login>,

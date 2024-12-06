@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 import { updateProfile } from 'firebase/auth';
 
-
 const Register = () => {
   const { createUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
@@ -20,6 +19,32 @@ const Register = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const { logInUser, signInWithGoogle } = useContext(AuthContext);
+  //handle google signin
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const user = result.user;
+  
+      // Check if user exists in MongoDB and fetch photoURL if available
+      const response = await fetch('http://localhost:5000/users/' + user.email);
+      const userData = await response.json();
+  
+      if (!userData || !userData.photoURL) {
+        // Add user to MongoDB if not already present
+        await fetch('http://localhost:5000/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: user.email, photoURL: user.photoURL }),
+        });
+      }
+  
+      navigate('/'); // Redirect on success
+    } catch (err) {
+      setError(err.message || 'Google login failed. Please try again.');
+    }
   };
 
   // Password Validation Function
@@ -40,34 +65,53 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, photoURL, password } = formData;
-  
+
     // Validate Password
     const passwordValidationError = validatePassword(password);
     if (passwordValidationError) {
       setPasswordError(passwordValidationError);
       return;
     }
-  
+
     try {
       // Create user using Firebase
       const userCredential = await createUser(email, password); // This should return the userCredential
       const user = userCredential.user; // Extract the user object
-  
+
       // Update user profile with name and photoURL
       await updateProfile(user, {
         displayName: name,
         photoURL: photoURL,
       });
-  
-      // Navigate to the home page on successful registration
-      setError('');
-      setPasswordError('');
-      navigate('/');
+
+      // Add user to MongoDB database
+      const newUser = {
+        name,
+        email,
+        photoURL,
+      };
+
+      const response = await fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (response.ok) {
+        // Navigate to the home page on successful registration
+        setError('');
+        setPasswordError('');
+        navigate('/');
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to save user to database.');
+      }
     } catch (err) {
       setError(err.message || 'Failed to register. Please try again.');
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -154,10 +198,17 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+              className="w-full mb-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
             >
               Register
             </button>
+
+            <button
+                onClick={handleGoogleSignIn}
+                className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
+              >
+                Continue with Google
+              </button>
           </div>
         </form>
 
