@@ -59,7 +59,7 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">Login to Visa-Navigator</h2>
 
         {error && (
           <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-center">
@@ -103,7 +103,7 @@ const Login = () => {
           {/* Forgot Password Link */}
           <div className="mb-6 text-right">
             <Link
-              to="/forgot-password"
+              to="/forgotpassword"
               className="text-blue-500 hover:underline text-sm"
             >
               Forgot Password?

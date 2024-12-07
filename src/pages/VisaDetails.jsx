@@ -46,15 +46,29 @@ const VisaDetails = () => {
   // Handle form submission
   const handleApply = async (e) => {
     e.preventDefault();
+  
+    // Construct application data
+    const applicationData = {
+      ...formData,
+      visaId: id,
+      countryName: visa.countryName,
+      countryImage: visa.countryImage,
+      visaType: visa.visaType,
+      processingTime: visa.processingTime,
+      fee: visa.fee,
+      validity: visa.validity,
+      applicationMethod: visa.applicationMethod,
+    };
+  
     try {
-      console.log('Submitting form data:', { ...formData, visaId: id });
+      console.log('Submitting application data:', applicationData);
   
       const response = await fetch('http://localhost:5000/applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, visaId: id }),
+        body: JSON.stringify(applicationData),
       });
   
       if (response.ok) {
@@ -70,6 +84,7 @@ const VisaDetails = () => {
       alert('An unexpected error occurred while submitting the application.');
     }
   };
+  
   
 
   if (error) {

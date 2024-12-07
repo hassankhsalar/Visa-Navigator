@@ -57,7 +57,7 @@ const Navbar = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/addvisa">Add Visa</Link></li>
             <li><Link to="/allvisas">All Visa's</Link></li>
-            <li><Link to="/">My Added Visas</Link></li>
+            <li><Link to="/myaddedvisa">My Added Visas</Link></li>
             <li><Link to="/my-applications">My Visa Applications</Link></li>
           </ul>
         </div>
@@ -67,7 +67,7 @@ const Navbar = () => {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/addvisa">Add Visa</Link></li>
           <li><Link to="/allvisas">All Visa's</Link></li>
-          <li><Link to="/">My Added Visas</Link></li>
+          <li><Link to="/myaddedvisa">My Added Visas</Link></li>
           <li><Link to="/my-applications">My Visa Applications</Link></li>
         </ul>
       </div>

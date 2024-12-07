@@ -16,6 +16,9 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import AuthProvider from './providers/AuthProvider.jsx';
 import MyVisaApplications from './pages/MyVisaApplications.jsx';
+import NotFound from './pages/NotFound.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
+import MyAddedVisa from './pages/MyAddedVisa.jsx';
 
 const router = createBrowserRouter([
   {
@@ -79,6 +82,14 @@ const router = createBrowserRouter([
         path: "/my-applications",
         element: <MyVisaApplications></MyVisaApplications>,
       },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/myaddedvisa",
+        element: <MyAddedVisa></MyAddedVisa>,
+      },
     ]
   },
   
@@ -87,8 +98,12 @@ const router = createBrowserRouter([
     element: <Login></Login>,
   },
   {
-    path: "/register",
-    element: <Register></Register>,
+    path: "*",
+    element: <NotFound></NotFound>,
+  },
+  {
+    path: "/forgotpassword",
+    element: <ForgotPassword></ForgotPassword>,
   },
   {
     path: "/updatevisa/:id",  // Update visa route should be dynamic (based on visa ID)

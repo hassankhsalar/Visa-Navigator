@@ -1,7 +1,11 @@
-import React from 'react';
-import Swal from 'sweetalert2'
+import React, { useContext } from 'react';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../providers/AuthProvider';
+ // Import AuthContext or adjust path
 
 const AddVisa = () => {
+  const { user } = useContext(AuthContext); // Get the logged-in user's details
+
   const handleAddVisa = (event) => {
     event.preventDefault();
 
@@ -17,7 +21,6 @@ const AddVisa = () => {
     const validity = form.validity.value;
     const applicationMethod = form.applicationMethod.value;
 
-    // Collect required documents
     const requiredDocuments = Array.from(
       form.querySelectorAll('input[name="requiredDocuments"]:checked')
     ).map((checkbox) => checkbox.value);
@@ -27,12 +30,13 @@ const AddVisa = () => {
       countryImage,
       visaType,
       processingTime,
-      requiredDocuments, 
+      requiredDocuments,
       description,
       ageRestriction,
       fee,
       validity,
       applicationMethod,
+      userEmail: user.email, // Attach the user's email
     };
 
     console.log(newVisa);
@@ -48,13 +52,14 @@ const AddVisa = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if(data.insertedId){
-            Swal.fire({
-                title: 'success!',
-                text: 'Visa Criteria Added Successfully',
-                icon: 'success',
-                confirmButtonText: 'Cool'
-              })
+        if (data.insertedId) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Visa Criteria Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Cool',
+          });
+          form.reset(); // Reset form fields after successful submission
         }
       });
   };

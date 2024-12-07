@@ -4,8 +4,11 @@ import Banner from '../components/Banner';
 import VisaCards from '../components/VisaCards';
 
 const Home = () => {
-  const visaData = useLoaderData(); // Fetch data from loader
-  const navigate = useNavigate(); // Initialize navigate hook
+  const visaData = useLoaderData(); // Load all visa data from the backend
+  const navigate = useNavigate(); // Initialize navigation
+
+  // Only display the latest six visas
+  const latestVisas = visaData.slice(0, 6); // Get the first 6 visas
 
   // Function to navigate to "All Visas" page
   const handleSeeAllVisas = () => {
@@ -14,22 +17,25 @@ const Home = () => {
 
   return (
     <div className="">
-      <div className='w-11/12 h-62 md:w-11/12 lg:w-6/12  mx-auto text-blue-500'>
-        <h2 className='text-2xl font-semibold my-3 text-center'>"The world is a book, and those who do not travel read only one page."
-        — Saint Augustine</h2>
+      <div className='w-11/12 h-62 md:w-11/12 lg:w-6/12 mx-auto text-blue-500'>
+        <h2 className='text-2xl font-semibold my-3 text-center'>
+          "The world is a book, and those who do not travel read only one page." — Saint Augustine
+        </h2>
         <Banner />
       </div>
       <div>
         <h2 className='text-2xl font-semibold my-3 text-center text-blue-500'>Latest Visas</h2>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-11/12 mx-auto'>
-        {visaData.map(visa => <VisaCards key={visa._id} visa={visa} />)}
+        {latestVisas.map((visa) => (
+          <VisaCards key={visa._id} visa={visa} />
+        ))}
       </div>
       <div className='w-8/12 mx-auto text-center'>
         {/* Button to navigate to All Visas page */}
         <button 
           className='btn btn-secondary w-full my-6'
-          onClick={handleSeeAllVisas} // Call the function to navigate
+          onClick={handleSeeAllVisas}
         >
           All Visas
         </button>
