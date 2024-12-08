@@ -1,32 +1,48 @@
-import React, { useEffect, useState } from 'react'; 
-import { useLoaderData, useNavigate } from 'react-router-dom'; 
+import React, { useEffect, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Banner from '../components/Banner';
 import VisaCards from '../components/VisaCards';
 
 const Home = () => {
-  const visaData = useLoaderData(); 
-  const navigate = useNavigate(); 
-  const [loading, setLoading] = useState(true); 
+  const visaData = useLoaderData();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState('light'); 
+
+  
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (visaData) {
-        setLoading(false); 
+        setLoading(false);
       }
-    }, 500); 
+    }, 500);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [visaData]);
 
-  
-  const latestVisas = visaData ? visaData.slice(0, 6) : []; 
+  const latestVisas = visaData ? visaData.slice(0, 6) : [];
 
-  
   const handleSeeAllVisas = () => {
-    navigate('/allvisas'); 
+    navigate('/allvisas');
   };
 
-  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -36,25 +52,39 @@ const Home = () => {
   }
 
   return (
-    <div className="">
-      <div className='w-11/12 h-62 md:w-11/12 lg:w-6/12 mx-auto text-blue-500'>
-        <h2 className='text-2xl font-semibold my-3 text-center'>
+    <div className="min-h-screen flex flex-col">
+      {/* Theme Toggle Button */}
+      <div className="fixed top-20 right-5">
+        <button
+          className="btn btn-sm btn-primary"
+          onClick={toggleTheme}
+        >
+          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+        </button>
+      </div>
+
+      <div className="w-11/12 h-62 md:w-11/12 lg:w-6/12 mx-auto text-blue-500">
+        <h2 className="text-2xl font-semibold my-3 text-center">
           "The world is a book, and those who do not travel read only one page." — Saint Augustine
         </h2>
         <Banner />
       </div>
+
       <div>
-        <h2 className='text-2xl font-semibold my-3 text-center text-blue-500'>Latest Visas</h2>
+        <h2 className="text-2xl font-semibold my-3 text-center text-blue-500">
+          Latest Visas
+        </h2>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-9/12 mx-auto'>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-9/12 mx-auto">
         {latestVisas.map((visa) => (
           <VisaCards key={visa._id} visa={visa} />
         ))}
       </div>
-      <div className='w-8/12 mx-auto text-center'>
-        {/* Button to navigate to All Visas page */}
-        <button 
-          className='btn btn-secondary w-full my-6'
+
+      <div className="w-8/12 mx-auto text-center">
+        <button
+          className="btn btn-secondary w-full my-6"
           onClick={handleSeeAllVisas}
         >
           All Visas
@@ -62,7 +92,7 @@ const Home = () => {
       </div>
 
       {/* Extra sections */}
-      <div className='w-9/12 mx-auto'>
+<div className='w-9/12 mx-auto'>
         <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-sm">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">ABOUT THIS NAVIGATOR</h2>
           <p className="text-gray-700 mb-4">
