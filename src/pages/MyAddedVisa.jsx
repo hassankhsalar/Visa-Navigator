@@ -9,7 +9,7 @@ const MyAddedVisa = () => {
 
   
   useEffect(() => {
-    fetch(`http://localhost:5000/my-visas?email=${user.email}`)
+    fetch(`https://visa-navigator-portal.vercel.app/my-visas?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setMyVisas(data));
   }, [user.email]);
@@ -26,7 +26,7 @@ const MyAddedVisa = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/visa/${id}`, {
+        fetch(`https://visa-navigator-portal.vercel.app/visa/${id}`, {
           method: 'DELETE',
         })
           .then((res) => res.json())
@@ -57,7 +57,7 @@ const MyAddedVisa = () => {
       applicationMethod: form.applicationMethod.value,
     };
 
-    fetch(`http://localhost:5000/visa/${editingVisa._id}`, {
+    fetch(`https://visa-navigator-portal.vercel.app/visa/${editingVisa._id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',

@@ -11,7 +11,7 @@ const MyVisaApplications = () => {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/applications?email=${user.email}`);
+        const response = await fetch(`https://visa-navigator-portal.vercel.app/applications?email=${user.email}`);
         const data = await response.json();
         setApplications(data);
         setFilteredApplications(data); 
@@ -31,7 +31,7 @@ const MyVisaApplications = () => {
     if (!confirmCancel) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/applications/${applicationId}`, {
+      const response = await fetch(`https://visa-navigator-portal.vercel.app/applications/${applicationId}`, {
         method: 'DELETE',
       });
 

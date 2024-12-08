@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <Home />,
         loader: async () => {
           try {
-            const response = await fetch('http://localhost:5000/visa');
+            const response = await fetch('https://visa-navigator-portal.vercel.app/visa');
             if (!response.ok) {
               throw new Error('Failed to fetch visa data');
             }
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <AllVisas></AllVisas>,
         loader: async () => {
           try {
-            const response = await fetch('http://localhost:5000/visa');
+            const response = await fetch('https://visa-navigator-portal.vercel.app/visa');
             if (!response.ok) {
               throw new Error('Failed to fetch all visa data');
             }
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           const { id } = params;  
           try {
-            const response = await fetch(`http://localhost:5000/visa/${id}`);
+            const response = await fetch(`https://visa-navigator-portal.vercel.app/visa/${id}`);
             if (!response.ok) {
               throw new Error("Failed to fetch visa details");
             }
@@ -130,7 +130,7 @@ const router = createBrowserRouter([
     loader: async ({ params }) => {
       const { id } = params;
       try {
-        const response = await fetch(`http://localhost:5000/visa/${id}`);
+        const response = await fetch(`https://visa-navigator-portal.vercel.app/visa/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch visa data for update');
         }

@@ -10,7 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch('http://localhost:5000/users/' + user.email)
+      fetch('https://visa-navigator-portal.vercel.app/users/' + user.email)
         .then((res) => res.json())
         .then((data) => {
           setProfile({

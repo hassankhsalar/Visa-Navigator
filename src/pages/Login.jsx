@@ -27,11 +27,11 @@ const Login = () => {
       const result = await signInWithGoogle();
       const user = result.user;
   
-      const response = await fetch('http://localhost:5000/users/' + user.email);
+      const response = await fetch('https://visa-navigator-portal.vercel.app/users/' + user.email);
       const userData = await response.json();
   
       if (!userData || !userData.photoURL) {
-        await fetch('http://localhost:5000/users', {
+        await fetch('https://visa-navigator-portal.vercel.app/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: user.email, photoURL: user.photoURL }),

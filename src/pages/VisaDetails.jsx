@@ -20,7 +20,7 @@ const VisaDetails = () => {
   useEffect(() => {
     const fetchVisaDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/visa/${id}`);
+        const response = await fetch(`https://visa-navigator-portal.vercel.app/visa/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch visa details');
         }
@@ -62,7 +62,7 @@ const VisaDetails = () => {
     try {
       
   
-      const response = await fetch('http://localhost:5000/applications', {
+      const response = await fetch('https://visa-navigator-portal.vercel.app/applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
