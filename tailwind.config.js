@@ -9,5 +9,8 @@ export default {
   },
   // eslint-disable-next-line
   plugins: [require('daisyui')],
+  daisyui: {
+    themes: ['light', 'dark'], // Include light and dark themes
+  },
 }
 
