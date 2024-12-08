@@ -19,10 +19,12 @@ import MyVisaApplications from './pages/MyVisaApplications.jsx';
 import NotFound from './pages/NotFound.jsx';
 import ForgotPassword from './pages/ForgotPassword.jsx';
 import MyAddedVisa from './pages/MyAddedVisa.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
+
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
     children: [
       {
@@ -32,34 +34,36 @@ const router = createBrowserRouter([
           try {
             const response = await fetch('http://localhost:5000/visa');
             if (!response.ok) {
-              throw new Error("Failed to fetch visa data");
+              throw new Error('Failed to fetch visa data');
             }
             return response.json();
           } catch (error) {
-            console.error("Error fetching data:", error);
-            return []; // Return empty array to handle gracefully in the Home component
+            console.error('Error fetching data:', error);
+            return [];
           }
         },
       },
       {
-        path: "/allvisas", // This is the route for the All Visas page
-        element: <AllVisas />,
+        path: '/allvisas',
+        element: <AllVisas></AllVisas>,
         loader: async () => {
           try {
             const response = await fetch('http://localhost:5000/visa');
             if (!response.ok) {
-              throw new Error("Failed to fetch all visa data");
+              throw new Error('Failed to fetch all visa data');
             }
             return response.json();
           } catch (error) {
-            console.error("Error fetching all visas:", error);
-            return []; // Return empty array if an error occurs
+            console.error('Error fetching all visas:', error);
+            return [];
           }
-        }
+        },
       },
       {
         path: "/visa-details/:id", // Dynamic route for Visa Details
-        element: <VisaDetails />, 
+        element: <PrivateRoute>
+           <VisaDetails></VisaDetails>,
+        </PrivateRoute>, 
         loader: async ({ params }) => {
           const { id } = params;  // Get visa ID from the URL
           try {
@@ -75,54 +79,70 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: "/addvisa",
-        element: <AddVisa />,
+        path: '/addvisa',
+        element: (
+          <PrivateRoute>
+              <AddVisa />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/my-applications",
-        element: <MyVisaApplications></MyVisaApplications>,
+        path: '/my-applications',
+        element: (
+          <PrivateRoute>
+            <MyVisaApplications />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/register",
-        element: <Register></Register>,
+        path: '/myaddedvisa',
+        element: (
+          <PrivateRoute>
+            <MyAddedVisa />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/myaddedvisa",
-        element: <MyAddedVisa></MyAddedVisa>,
+        path: '/register',
+        element: <Register />,
       },
-    ]
-  },
-  
-  {
-    path: "/login",
-    element: <Login></Login>,
+    ],
   },
   {
-    path: "*",
-    element: <NotFound></NotFound>,
+    path: '/login',
+    element: <Login />,
   },
   {
-    path: "/forgotpassword",
-    element: <ForgotPassword></ForgotPassword>,
+    path: '*',
+    element: <NotFound />,
   },
   {
-    path: "/updatevisa/:id",  // Update visa route should be dynamic (based on visa ID)
-    element: <UpdateVisa />,
+    path: '/forgotpassword',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/updatevisa/:id',
+    element: (
+      <PrivateRoute>
+        <UpdateVisa />
+      </PrivateRoute>
+    ),
     loader: async ({ params }) => {
       const { id } = params;
       try {
         const response = await fetch(`http://localhost:5000/visa/${id}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch visa data for update");
+          throw new Error('Failed to fetch visa data for update');
         }
         return response.json();
       } catch (error) {
-        console.error("Error fetching visa data for update:", error);
-        return null; // Handle gracefully if error occurs
+        console.error('Error fetching visa data for update:', error);
+        return null;
       }
-    }
+    },
   },
 ]);
+
 
 // Use createRoot correctly
 const rootElement = document.getElementById('root');

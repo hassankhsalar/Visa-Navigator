@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider'; // Ensure this is correctly set up
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -8,6 +8,9 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
 
   // Handle Input Change
   const handleChange = (e) => {
@@ -34,7 +37,7 @@ const Login = () => {
         });
       }
   
-      navigate('/'); // Redirect on success
+      navigate(from); // Redirect on success
     } catch (err) {
       setError(err.message || 'Google login failed. Please try again.');
     }
@@ -49,8 +52,8 @@ const Login = () => {
 
     try {
       await logInUser(email, password);
-      setError(''); // Clear any previous errors
-      navigate('/'); // Redirect to the home page or desired page after login
+      setError('');
+      navigate(from); // Redirect to the last visited path or home
     } catch (err) {
       setError(err.message || 'Failed to login. Please try again.');
     }
