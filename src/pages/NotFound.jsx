@@ -11,7 +11,7 @@ const NotFound = () => {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <img
-          src="https://via.placeholder.com/400x250?text=404+Error" // Replace with your preferred image
+          src="https://via.placeholder.com/400x250?text=404+Error" 
           alt="404 illustration"
           className="mx-auto mt-6 rounded-lg shadow-lg"
         />

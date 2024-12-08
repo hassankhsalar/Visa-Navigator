@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const VisaCards = ({ visa }) => {
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate(); 
   
   const {
     countryName,
@@ -15,12 +16,12 @@ const VisaCards = ({ visa }) => {
     fee,
     validity,
     applicationMethod,
-    _id,  // Access the visa ID for the route
+    _id,  
   } = visa;
 
-  // Handle "See Details" button click
+  
   const handleSeeDetails = () => {
-    navigate(`/visa-details/${_id}`); // Redirect to the visa details page
+    navigate(`/visa-details/${_id}`); 
   };
 
   return (

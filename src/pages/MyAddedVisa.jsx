@@ -5,16 +5,16 @@ import Swal from 'sweetalert2';
 const MyAddedVisa = () => {
   const { user } = useContext(AuthContext);
   const [myVisas, setMyVisas] = useState([]);
-  const [editingVisa, setEditingVisa] = useState(null); // Holds the visa being edited
+  const [editingVisa, setEditingVisa] = useState(null); 
 
-  // Fetch user's visas
+  
   useEffect(() => {
     fetch(`http://localhost:5000/my-visas?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setMyVisas(data));
   }, [user.email]);
 
-  // Handle delete action
+  
   const handleDelete = (id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -33,14 +33,14 @@ const MyAddedVisa = () => {
           .then((data) => {
             if (data.deletedCount > 0) {
               Swal.fire('Deleted!', 'Visa has been deleted.', 'success');
-              setMyVisas(myVisas.filter((visa) => visa._id !== id)); // Remove from state
+              setMyVisas(myVisas.filter((visa) => visa._id !== id)); 
             }
           });
       }
     });
   };
 
-  // Handle update form submission
+  
   const handleUpdate = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -73,7 +73,7 @@ const MyAddedVisa = () => {
               visa._id === editingVisa._id ? { ...visa, ...updatedVisa } : visa
             )
           );
-          setEditingVisa(null); // Close the modal
+          setEditingVisa(null); 
         }
       });
   };

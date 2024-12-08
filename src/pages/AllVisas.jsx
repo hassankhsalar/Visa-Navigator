@@ -3,21 +3,21 @@ import { useLoaderData, Link } from 'react-router-dom';
 import VisaCards from '../components/VisaCards';
 
 const AllVisas = () => {
-  const visaData = useLoaderData(); // Fetch all visa data from the loader
-  const [filteredVisas, setFilteredVisas] = useState(visaData); // State to store filtered visas
-  const [selectedVisaType, setSelectedVisaType] = useState(''); // For dropdown filter
-  const [loading, setLoading] = useState(true); // State to manage loading
+  const visaData = useLoaderData(); 
+  const [filteredVisas, setFilteredVisas] = useState(visaData); 
+  const [selectedVisaType, setSelectedVisaType] = useState(''); 
+  const [loading, setLoading] = useState(true); 
 
-  // Simulate loading delay
+  
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); // Set loading to false after 1 second
-    }, 1000); // 1000 ms = 1 second
+      setLoading(false); 
+    }, 1000); 
 
-    return () => clearTimeout(timer); // Clear timer on component unmount
+    return () => clearTimeout(timer); 
   }, []);
 
-  // Function to handle filtering visas by type
+  
   const handleVisaTypeChange = (e) => {
     const selectedType = e.target.value;
     setSelectedVisaType(selectedType);
@@ -26,7 +26,7 @@ const AllVisas = () => {
       const filtered = visaData.filter((visa) => visa.visaType === selectedType);
       setFilteredVisas(filtered);
     } else {
-      setFilteredVisas(visaData); // Reset to show all visas when no filter is selected
+      setFilteredVisas(visaData); 
     }
   };
 
@@ -36,7 +36,7 @@ const AllVisas = () => {
     }
   }, [filteredVisas, selectedVisaType]);
 
-  // Render loading spinner if loading is true
+  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">

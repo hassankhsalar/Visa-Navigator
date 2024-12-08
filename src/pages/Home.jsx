@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'; // Import useState and useEffect
-import { useLoaderData, useNavigate } from 'react-router-dom'; // Import the useNavigate hook
+import React, { useEffect, useState } from 'react'; 
+import { useLoaderData, useNavigate } from 'react-router-dom'; 
 import Banner from '../components/Banner';
 import VisaCards from '../components/VisaCards';
 
 const Home = () => {
-  const visaData = useLoaderData(); // Load all visa data from the backend
-  const navigate = useNavigate(); // Initialize navigation
-  const [loading, setLoading] = useState(true); // Initialize loading state
+  const visaData = useLoaderData(); 
+  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (visaData) {
-        setLoading(false); // Set loading to false once visaData is available
+        setLoading(false); 
       }
     }, 500); 
 
-    return () => clearTimeout(timer); // Clear timer on component unmount
+    return () => clearTimeout(timer); 
   }, [visaData]);
 
-  // Only display the latest six visas
-  const latestVisas = visaData ? visaData.slice(0, 6) : []; // Get the first 6 visas
+  
+  const latestVisas = visaData ? visaData.slice(0, 6) : []; 
 
-  // Function to navigate to "All Visas" page
+  
   const handleSeeAllVisas = () => {
-    navigate('/allvisas'); // Navigate to the /allvisas route
+    navigate('/allvisas'); 
   };
 
-  // Render loading spinner if loading is true
+  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">

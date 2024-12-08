@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client'; // Correct import for createRoot
+import { createRoot } from 'react-dom/client'; 
 import './index.css';
 import {
   createBrowserRouter,
@@ -11,7 +11,7 @@ import UpdateVisa from './pages/UpdateVisa.jsx';
 import App from './App.jsx';
 import Home from './pages/Home.jsx';
 import AllVisas from './pages/AllVisas.jsx';
-import VisaDetails from './pages/VisaDetails.jsx';  // Import VisaDetails page
+import VisaDetails from './pages/VisaDetails.jsx';  
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import AuthProvider from './providers/AuthProvider.jsx';
@@ -60,21 +60,21 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/visa-details/:id", // Dynamic route for Visa Details
+        path: "/visa-details/:id", 
         element: <PrivateRoute>
            <VisaDetails></VisaDetails>,
         </PrivateRoute>, 
         loader: async ({ params }) => {
-          const { id } = params;  // Get visa ID from the URL
+          const { id } = params;  
           try {
             const response = await fetch(`http://localhost:5000/visa/${id}`);
             if (!response.ok) {
               throw new Error("Failed to fetch visa details");
             }
-            return response.json();  // Return the visa data to the VisaDetails component
+            return response.json();  
           } catch (error) {
             console.error("Error fetching visa details:", error);
-            return null;  // Handle error gracefully if fetching fails
+            return null;  
           }
         }
       },
@@ -144,7 +144,7 @@ const router = createBrowserRouter([
 ]);
 
 
-// Use createRoot correctly
+
 const rootElement = document.getElementById('root');
 createRoot(rootElement).render(
   <StrictMode>

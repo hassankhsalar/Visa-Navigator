@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { AuthContext } from '../providers/AuthProvider'; // Context to get user info
+import { AuthContext } from '../providers/AuthProvider'; 
 
 const VisaDetails = () => {
   const { id } = useParams();
   const [visa, setVisa] = useState(null);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    appliedDate: new Date().toISOString().split('T')[0], // Current date
+    appliedDate: new Date().toISOString().split('T')[0], 
     email: '',
     fee: '',
   });
@@ -27,7 +27,7 @@ const VisaDetails = () => {
         const data = await response.json();
         setVisa(data);
 
-        // Set default form data for email and fee
+        
         setFormData((prev) => ({
           ...prev,
           email: user?.email || '',
@@ -42,11 +42,11 @@ const VisaDetails = () => {
     fetchVisaDetails();
   }, [id, user]);
 
-  // Handle form submission
+  
   const handleApply = async (e) => {
     e.preventDefault();
   
-    // Construct application data
+    
     const applicationData = {
       ...formData,
       visaId: id,
@@ -60,7 +60,7 @@ const VisaDetails = () => {
     };
   
     try {
-      console.log('Submitting application data:', applicationData);
+      
   
       const response = await fetch('http://localhost:5000/applications', {
         method: 'POST',

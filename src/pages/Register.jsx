@@ -15,25 +15,25 @@ const Register = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Handle Input Change
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const { logInUser, signInWithGoogle } = useContext(AuthContext);
-  //handle google signin
+  
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
   
-      // Check if user exists in MongoDB and fetch photoURL if available
+      
       const response = await fetch('http://localhost:5000/users/' + user.email);
       const userData = await response.json();
   
       if (!userData || !userData.photoURL) {
-        // Add user to MongoDB if not already present
+       
         await fetch('http://localhost:5000/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -41,13 +41,13 @@ const Register = () => {
         });
       }
   
-      navigate('/'); // Redirect on success
+      navigate('/'); 
     } catch (err) {
       setError(err.message || 'Google login failed. Please try again.');
     }
   };
 
-  // Password Validation Function
+  
   const validatePassword = (password) => {
     if (!/[A-Z]/.test(password)) {
       return 'Password must have at least one uppercase letter.';
@@ -61,12 +61,12 @@ const Register = () => {
     return '';
   };
 
-  // Handle Form Submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, photoURL, password } = formData;
 
-    // Validate Password
+    
     const passwordValidationError = validatePassword(password);
     if (passwordValidationError) {
       setPasswordError(passwordValidationError);
@@ -74,17 +74,17 @@ const Register = () => {
     }
 
     try {
-      // Create user using Firebase
-      const userCredential = await createUser(email, password); // This should return the userCredential
-      const user = userCredential.user; // Extract the user object
+      
+      const userCredential = await createUser(email, password); 
+      const user = userCredential.user; 
 
-      // Update user profile with name and photoURL
+      
       await updateProfile(user, {
         displayName: name,
         photoURL: photoURL,
       });
 
-      // Add user to MongoDB database
+      
       const newUser = {
         name,
         email,
@@ -100,7 +100,7 @@ const Register = () => {
       });
 
       if (response.ok) {
-        // Navigate to the home page on successful registration
+        
         setError('');
         setPasswordError('');
         navigate('/');

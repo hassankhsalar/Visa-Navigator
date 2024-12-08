@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../providers/AuthProvider'; // Ensure this is correctly set up
+import { AuthContext } from '../providers/AuthProvider'; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-  const { logInUser, auth, signInWithGoogle } = useContext(AuthContext); // Assuming AuthContext provides the `auth` instance
+  const { logInUser, auth, signInWithGoogle } = useContext(AuthContext); 
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -14,15 +14,15 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || '/';
 
-  // Handle Input Change
+ 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  //handle google signin
+  
   const handleGoogleSignIn = async () => {
-    setLoading(true); // Start loading
+    setLoading(true); 
     try {
       const result = await signInWithGoogle();
       const user = result.user;
@@ -38,10 +38,10 @@ const Login = () => {
         });
       }
   
-      setLoading(false); // Stop loading
-      navigate(from); // Redirect on success
+      setLoading(false); 
+      navigate(from); 
     } catch (err) {
-      setLoading(false); // Stop loading on error
+      setLoading(false); 
       Swal.fire({
         icon: 'error',
         title: 'Google Sign-In Failed',
@@ -56,20 +56,20 @@ const Login = () => {
 
 
 
-  // Handle Form Submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
   
-    setLoading(true); // Start loading
+    setLoading(true); 
     try {
       await logInUser(email, password);
       setError('');
-      setLoading(false); // Stop loading
-      navigate(from); // Redirect to the last visited path or home
+      setLoading(false); 
+      navigate(from); 
     } catch (err) {
-      setLoading(false); // Stop loading on error
-      // Show SweetAlert on error
+      setLoading(false); 
+      
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',

@@ -14,7 +14,7 @@ const MyVisaApplications = () => {
         const response = await fetch(`http://localhost:5000/applications?email=${user.email}`);
         const data = await response.json();
         setApplications(data);
-        setFilteredApplications(data); // Initialize with full list
+        setFilteredApplications(data); 
       } catch (err) {
         console.error('Failed to fetch applications:', err);
       }
@@ -25,7 +25,7 @@ const MyVisaApplications = () => {
     }
   }, [user]);
 
-  // Handle cancel application
+ 
   const handleCancel = async (applicationId) => {
     const confirmCancel = window.confirm('Are you sure you want to cancel this application?');
     if (!confirmCancel) return;
@@ -36,10 +36,10 @@ const MyVisaApplications = () => {
       });
 
       if (response.ok) {
-        // Remove the application from the state
+        
         const updatedApplications = applications.filter((app) => app._id !== applicationId);
         setApplications(updatedApplications);
-        setFilteredApplications(updatedApplications); // Update filtered list
+        setFilteredApplications(updatedApplications); 
         alert('Application canceled successfully.');
       } else {
         alert('Failed to cancel application. Please try again.');
@@ -50,7 +50,7 @@ const MyVisaApplications = () => {
     }
   };
 
-  // Handle search
+  
   const handleSearch = () => {
     const filtered = applications.filter((app) =>
       app.countryName.toLowerCase().includes(searchTerm.toLowerCase())

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext); // Include logOut from AuthContext
+  const { user, logOut } = useContext(AuthContext); 
   const [profile, setProfile] = useState({ email: '', photoURL: '' });
 
   useEffect(() => {
@@ -15,18 +15,18 @@ const Navbar = () => {
         .then((data) => {
           setProfile({
             email: data.email || user.email,
-            photoURL: data.photoURL || '', // Use Firebase photoURL as fallback
+            photoURL: data.photoURL || '', 
           });
         })
         .catch((err) => console.error('Failed to fetch user profile:', err));
     }
   }, [user]);
 
-  // Handle Log Out
+  
   const handleLogOut = async () => {
     try {
-      await logOut(); // Call the logOut function from AuthContext
-      setProfile({ email: '', photoURL: '' }); // Reset profile on logout
+      await logOut(); 
+      setProfile({ email: '', photoURL: '' }); 
     } catch (err) {
       console.error('Failed to log out:', err);
     }

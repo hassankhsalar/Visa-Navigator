@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../providers/AuthProvider';
- // Import AuthContext or adjust path
+ 
 
 const AddVisa = () => {
-  const { user } = useContext(AuthContext); // Get the logged-in user's details
+  const { user } = useContext(AuthContext); 
 
   const handleAddVisa = (event) => {
     event.preventDefault();
@@ -36,12 +36,10 @@ const AddVisa = () => {
       fee,
       validity,
       applicationMethod,
-      userEmail: user.email, // Attach the user's email
+      userEmail: user.email, 
     };
 
-    console.log(newVisa);
-
-    // Send data to the server
+    
     fetch('http://localhost:5000/visa', {
       method: 'POST',
       headers: {
@@ -51,7 +49,7 @@ const AddVisa = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         if (data.insertedId) {
           Swal.fire({
             title: 'Success!',
@@ -59,7 +57,7 @@ const AddVisa = () => {
             icon: 'success',
             confirmButtonText: 'Cool',
           });
-          form.reset(); // Reset form fields after successful submission
+          form.reset(); 
         }
       });
   };
