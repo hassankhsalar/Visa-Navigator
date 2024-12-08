@@ -15,7 +15,7 @@ const Banner = () => {
                     className="w-full rounded-2xl" />
                   <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
                     <a href="#slide3" className="btn btn-circle">❮</a>
-                    <button className="btn">About</button>
+                    
                     <a href="#slide2" className="btn btn-circle">❯</a>
                   </div>
                 </div>
@@ -25,7 +25,7 @@ const Banner = () => {
                     className="w-full rounded-2xl" />
                   <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
                     <a href="#slide1" className="btn btn-circle">❮</a>
-                    <button className="btn">Success</button>
+                    
                     <a href="#slide3" className="btn btn-circle">❯</a>
                   </div>
                 </div>
@@ -35,7 +35,7 @@ const Banner = () => {
                     className="w-full rounded-2xl" />
                   <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
                     <a href="#slide2" className="btn btn-circle">❮</a>
-                    <button className="btn">Extras</button>
+                    
                     <a href="#slide1" className="btn btn-circle">❯</a>
                   </div>
                 </div>

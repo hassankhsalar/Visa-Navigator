@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useLoaderData, Link } from 'react-router-dom';
 import VisaCards from '../components/VisaCards';
 
-
 const AllVisas = () => {
   const visaData = useLoaderData(); // Fetch all visa data from the loader
   const [filteredVisas, setFilteredVisas] = useState(visaData); // State to store filtered visas
   const [selectedVisaType, setSelectedVisaType] = useState(''); // For dropdown filter
+  const [loading, setLoading] = useState(true); // State to manage loading
+
+  // Simulate loading delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading to false after 1 second
+    }, 1000); // 1000 ms = 1 second
+
+    return () => clearTimeout(timer); // Clear timer on component unmount
+  }, []);
 
   // Function to handle filtering visas by type
   const handleVisaTypeChange = (e) => {
@@ -26,6 +35,15 @@ const AllVisas = () => {
       alert('No visas found for the selected type.');
     }
   }, [filteredVisas, selectedVisaType]);
+
+  // Render loading spinner if loading is true
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="all-visas-container p-6 max-w-screen-xl mx-auto">

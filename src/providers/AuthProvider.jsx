@@ -61,9 +61,10 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={userInfo}>
-            {loading ? <div>Loading...</div> : children} {/* Optional loader */}
+            {( children )}
         </AuthContext.Provider>
     );
+    
 };
 
 export default AuthProvider;

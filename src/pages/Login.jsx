@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider'; // Ensure this is correctly set up
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const { logInUser, auth, signInWithGoogle } = useContext(AuthContext); // Assuming AuthContext provides the `auth` instance
@@ -9,6 +10,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
   const from = location.state?.from?.pathname || '/';
 
@@ -20,16 +22,15 @@ const Login = () => {
 
   //handle google signin
   const handleGoogleSignIn = async () => {
+    setLoading(true); // Start loading
     try {
       const result = await signInWithGoogle();
       const user = result.user;
   
-      // Check if user exists in MongoDB and fetch photoURL if available
       const response = await fetch('http://localhost:5000/users/' + user.email);
       const userData = await response.json();
   
       if (!userData || !userData.photoURL) {
-        // Add user to MongoDB if not already present
         await fetch('http://localhost:5000/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -37,11 +38,21 @@ const Login = () => {
         });
       }
   
+      setLoading(false); // Stop loading
       navigate(from); // Redirect on success
     } catch (err) {
-      setError(err.message || 'Google login failed. Please try again.');
+      setLoading(false); // Stop loading on error
+      Swal.fire({
+        icon: 'error',
+        title: 'Google Sign-In Failed',
+        text: err.message || 'Unable to sign in with Google. Please try again.',
+        confirmButtonColor: '#3085d6',
+      });
+      setError(err.message || 'Google login failed.');
     }
   };
+  
+  
 
 
 
@@ -49,15 +60,27 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
-
+  
+    setLoading(true); // Start loading
     try {
       await logInUser(email, password);
       setError('');
+      setLoading(false); // Stop loading
       navigate(from); // Redirect to the last visited path or home
     } catch (err) {
-      setError(err.message || 'Failed to login. Please try again.');
+      setLoading(false); // Stop loading on error
+      // Show SweetAlert on error
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: err.message || 'Invalid email or password. Please try again.',
+        confirmButtonColor: '#3085d6',
+      });
+      setError(err.message || 'Failed to login.');
     }
   };
+  
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
