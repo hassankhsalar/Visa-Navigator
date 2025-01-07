@@ -22,7 +22,6 @@ const Navbar = () => {
     }
   }, [user]);
 
-  
   const handleLogOut = async () => {
     try {
       await logOut(); 
@@ -35,7 +34,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 rounded-2xl">
       <div className="navbar-start">
-        <img className='w-20' src={logo} alt="Logo" />
+        <img className="w-16 h-6" src={logo} alt="Logo" />
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -55,20 +54,28 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/addvisa">Add Visa</Link></li>
-            <li><Link to="/allvisas">All Visa's</Link></li>
-            <li><Link to="/myaddedvisa">My Added Visas</Link></li>
-            <li><Link to="/my-applications">My Visa Applications</Link></li>
+            <li className="hover:text-primary"><Link to="/allvisas">All Visas</Link></li>
+            {user && (
+              <>
+                <li><Link to="/addvisa">Add Visa</Link></li>
+                <li><Link to="/myaddedvisa">My Added Visas</Link></li>
+                <li><Link to="/my-applications">My Visa Applications</Link></li>
+              </>
+            )}
           </ul>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal text-base font-semibold px-1">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/addvisa">Add Visa</Link></li>
-          <li><Link to="/allvisas">All Visa's</Link></li>
-          <li><Link to="/myaddedvisa">My Added Visas</Link></li>
-          <li><Link to="/my-applications">My Visa Applications</Link></li>
+          <li className="hover:text-primary"><Link to="/">Home</Link></li>
+          <li className="hover:text-primary"><Link to="/allvisas">All Visas</Link></li>
+          {user && (
+            <>
+              <li className="hover:text-primary"><Link to="/addvisa">Add Visa</Link></li>
+              <li className="hover:text-primary"><Link to="/myaddedvisa">My Added Visas</Link></li>
+              <li className="hover:text-primary"><Link to="/my-applications">My Visa Applications</Link></li>
+            </>
+          )}
         </ul>
       </div>
       <div className="navbar-end gap-3">
@@ -84,13 +91,12 @@ const Navbar = () => {
             )}
           </div>
         </div>
-        {/* Conditional rendering of Login/Logout button */}
         {user ? (
-          <button className="btn btn-primary" onClick={handleLogOut}>
+          <button className="btn bg-accent" onClick={handleLogOut}>
             Log Out
           </button>
         ) : (
-          <Link className="btn btn-primary" to="/login">
+          <Link className="btn bg-accent" to="/login">
             Login
           </Link>
         )}

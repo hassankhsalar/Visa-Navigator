@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Banner from '../components/Banner';
 import VisaCards from '../components/VisaCards';
+import Faq from '../components/Faq';
+import About from '../components/About';
 
 const Home = () => {
   const visaData = useLoaderData();
@@ -9,20 +11,17 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState('light'); 
 
-  
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
 
-  
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
@@ -52,26 +51,26 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className=" min-h-screen flex flex-col bg-transparent text-text">
       {/* Theme Toggle Button */}
       <div className="fixed top-20 right-5">
         <button
-          className="btn btn-sm btn-primary"
+          className="btn btn-sm bg-primary text-background hover:bg-accent"
           onClick={toggleTheme}
         >
           {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
         </button>
       </div>
 
-      <div className="w-11/12 h-62 md:w-11/12 lg:w-6/12 mx-auto text-blue-500">
-        <h2 className="text-2xl font-semibold my-3 text-center">
+      <div className="w-11/12 h-62 md:w-11/12 lg:w-9/12 mx-auto text-sky-700 ">
+        <h2 className="text-2xl w-9/12 mx-auto font-semibold my-3 text-center">
           "The world is a book, and those who do not travel read only one page." — Saint Augustine
         </h2>
         <Banner />
       </div>
 
       <div>
-        <h2 className="text-2xl font-semibold my-3 text-center text-blue-500">
+        <h2 className="text-2xl font-semibold my-3 text-center text-secondary">
           Latest Visas
         </h2>
       </div>
@@ -84,91 +83,18 @@ const Home = () => {
 
       <div className="w-8/12 mx-auto text-center">
         <button
-          className="btn btn-secondary w-full my-6"
+          className="btn border-2 bg-secondary hover:text-white hover:bg-accent w-full my-6"
           onClick={handleSeeAllVisas}
         >
           All Visas
         </button>
       </div>
 
-      {/* Extra sections */}
-<div className='w-9/12 mx-auto'>
-        <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">ABOUT THIS NAVIGATOR</h2>
-          <p className="text-gray-700 mb-4">
-              <strong>NO INFORMATION COLLECTED:</strong> Any answers you provide are anonymous. No personally identifiable information, including IP address, is collected from this application, and the Agency has no way of connecting responses to any individual.
-          </p>
-          <p className="text-gray-700 mb-4">
-              The Navigator is not an online application. Completing the navigator does not entitle you to a Agency or any other immigration benefit. The Agency or consulate may require you to provide additional information or supporting documents before acting on your request.
-          </p>
-          <h3 className="text-lg font-medium text-gray-800 mb-2">ACCESSIBILITY</h3>
-          <p className="text-gray-700 mb-2">
-              Google Forms has certain software limitations. We have provided alternatives throughout for the following issues that users will encounter:
-          </p>
-          <ul className="list-disc list-inside text-gray-700">
-              <li>Repeated page titles when using screen readers</li>
-              <li>Color contrast for buttons</li>
-              <li>Areas where screen readers announce additional blank spaces</li>
-          </ul>
-        </div>
-      </div>
-      <div>
-        <div className="max-w-2xl mx-auto p-6 bg-base-100 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-center mb-6">Frequently Asked Questions</h2>
+      {/* About Section */}
+      <About></About>
 
-          {/* FAQ 1 */}
-          <div className="collapse collapse-arrow bg-base-200">
-            <input type="radio" name="faq-accordion" defaultChecked />
-            <div className="collapse-title text-xl font-medium">
-              What is the purpose of this navigator?
-            </div>
-            <div className="collapse-content">
-              <p>
-                This navigator provides information and guidance for users. It is not an official application for any visa or immigration benefit.
-              </p>
-            </div>
-          </div>
-
-          {/* FAQ 2 */}
-          <div className="collapse collapse-arrow bg-base-200 mt-4">
-            <input type="radio" name="faq-accordion" />
-            <div className="collapse-title text-xl font-medium">
-              Is my information collected or stored?
-            </div>
-            <div className="collapse-content">
-              <p>
-                No, this navigator does not collect or store any personally identifiable information, including your IP address.
-              </p>
-            </div>
-          </div>
-
-          {/* FAQ 3 */}
-          <div className="collapse collapse-arrow bg-base-200 mt-4">
-            <input type="radio" name="faq-accordion" />
-            <div className="collapse-title text-xl font-medium">
-              Does completing the navigator guarantee a visa?
-            </div>
-            <div className="collapse-content">
-              <p>
-                No, completing the navigator does not guarantee a visa or any immigration benefit. Additional documents or information may be required by the embassy or consulate.
-              </p>
-            </div>
-          </div>
-
-          {/* FAQ 4 */}
-          <div className="collapse collapse-arrow bg-base-200 mt-4">
-            <input type="radio" name="faq-accordion" />
-            <div className="collapse-title text-xl font-medium">
-              What are the accessibility features of this navigator?
-            </div>
-            <div className="collapse-content">
-              <p>
-                The navigator addresses issues like repeated page titles for screen readers, improved color contrast for buttons, and adjustments for spaces announced by screen readers.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* FAQ Section */}
+      <Faq></Faq>
     </div>
   );
 };

@@ -3,21 +3,20 @@ import { useLoaderData, Link } from 'react-router-dom';
 import VisaCards from '../components/VisaCards';
 
 const AllVisas = () => {
-  const visaData = useLoaderData(); 
-  const [filteredVisas, setFilteredVisas] = useState(visaData); 
-  const [selectedVisaType, setSelectedVisaType] = useState(''); 
-  const [loading, setLoading] = useState(true); 
+  const visaData = useLoaderData();
+  const [filteredVisas, setFilteredVisas] = useState(visaData);
+  const [selectedVisaType, setSelectedVisaType] = useState('');
+  const [sortOrder, setSortOrder] = useState(''); // Sort order state
+  const [loading, setLoading] = useState(true);
 
-  
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); 
-    }, 1000); 
+      setLoading(false);
+    }, 1000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
-  
   const handleVisaTypeChange = (e) => {
     const selectedType = e.target.value;
     setSelectedVisaType(selectedType);
@@ -26,7 +25,24 @@ const AllVisas = () => {
       const filtered = visaData.filter((visa) => visa.visaType === selectedType);
       setFilteredVisas(filtered);
     } else {
-      setFilteredVisas(visaData); 
+      setFilteredVisas(visaData);
+    }
+  };
+
+  const handleSortChange = (e) => {
+    const order = e.target.value;
+    setSortOrder(order);
+
+    if (order === 'asc') {
+      const sorted = [...filteredVisas].sort((a, b) =>
+        a.fee - b.fee
+      );
+      setFilteredVisas(sorted);
+    } else if (order === 'desc') {
+      const sorted = [...filteredVisas].sort((a, b) =>
+        b.fee - a.fee
+      );
+      setFilteredVisas(sorted);
     }
   };
 
@@ -36,7 +52,6 @@ const AllVisas = () => {
     }
   }, [filteredVisas, selectedVisaType]);
 
-  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -50,7 +65,7 @@ const AllVisas = () => {
       <h2 className="text-3xl font-semibold text-center mb-6">All Visas</h2>
 
       {/* Dropdown for visa type filter */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 space-x-4">
         <select
           className="select select-bordered w-48"
           value={selectedVisaType}
@@ -61,6 +76,17 @@ const AllVisas = () => {
           <option value="Student visa">Student visa</option>
           <option value="Official visa">Official visa</option>
           <option value="Business visa">Business visa</option>
+        </select>
+
+        {/* Dropdown for sorting */}
+        <select
+          className="select select-bordered w-48"
+          value={sortOrder}
+          onChange={handleSortChange}
+        >
+          <option value="">Sort by Fee</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
         </select>
       </div>
 

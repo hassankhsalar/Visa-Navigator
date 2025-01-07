@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const VisaCards = ({ visa }) => {
-  const navigate = useNavigate(); 
-  
+  const navigate = useNavigate();
+
   const {
     countryName,
     countryImage,
@@ -16,12 +16,11 @@ const VisaCards = ({ visa }) => {
     fee,
     validity,
     applicationMethod,
-    _id,  
+    _id,
   } = visa;
 
-  
   const handleSeeDetails = () => {
-    navigate(`/visa-details/${_id}`); 
+    navigate(`/visa-details/${_id}`);
   };
 
   return (
@@ -34,7 +33,9 @@ const VisaCards = ({ visa }) => {
         />
       </figure>
       <div className="card-body lg:w-2/3 p-6 flex flex-col">
-        <h2 className="card-title text-2xl font-bold text-gray-800">{countryName}</h2>
+        <h2 className="card-title text-2xl font-bold text-gray-800">
+          {countryName}
+        </h2>
         <p className="text-gray-600">
           <strong>Visa Type:</strong> {visaType}
         </p>
@@ -51,7 +52,10 @@ const VisaCards = ({ visa }) => {
           <strong>Application Method:</strong> {applicationMethod}
         </p>
         <div className="card-actions mt-auto flex justify-end">
-          <button className="btn btn-outline btn-primary" onClick={handleSeeDetails}>
+          <button
+            className="btn border-2 bg-secondary hover:text-white hover:bg-accent"
+            onClick={handleSeeDetails}
+          >
             See Details
           </button>
         </div>
