@@ -22,7 +22,8 @@ Visa-Navigator Portal is a web-based platform designed to help users navigate vi
 
 ### 1. Clone the Repository  
 ```sh
-git clone:  "https://github.com/hassankhsalar/Visa-Navigator.git"
+git clone https://github.com/hassankhsalar/Visa-Navigator.git
+cd Visa-Navigator
 
 ### 2. Install Dependencies
 ```sh
