@@ -26,14 +26,14 @@ git clone https://github.com/hassankhsalar/Visa-Navigator.git
 cd Visa-Navigator
 
 ### 2. Install Dependencies
-```sh
+sh
 npm install
 
 ### 3. Set Up Environment Variables
 - Create a .env file in the root directory and add the required environment variables (e.g., API keys, database URL).
 
 ### 4. Start the Development Server
-```sh
+sh
 npm run dev
 
 | Method | Endpoint        | Description                          |
