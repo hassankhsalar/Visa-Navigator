@@ -43,4 +43,10 @@ npm run dev
 | PUT    | `/api/visas/:id` | Update visa information (Admin)  |
 | DELETE | `/api/visas/:id` | Remove a visa entry (Admin)     |
 
+## Screenshots
+
+![App Screenshot](https://i.ibb.co.com/tTPpcgPX/VNB.png)
+![App Screenshot](https://i.ibb.co.com/gN8LR6p/VNH.png)
+
+
 
